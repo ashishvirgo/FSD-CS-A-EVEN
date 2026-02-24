@@ -1,6 +1,10 @@
 import http from "http"
 import os, { freemem } from "os"
 const port=5001;
+let users = [
+    { id: 1, name: "Ashish", age: 25 },
+    { id: 2, name: "Rahul", age: 30 }
+];
 const server=http.createServer((req1,res1)=>{
     const url=req1.url;
     const method=req1.method;
@@ -18,18 +22,23 @@ const server=http.createServer((req1,res1)=>{
             TotalMemory: (os.totalmem()/1024**3).toFixed(2)+"GB",
             freeMemory: (os.freemem()/1024**3).toFixed(2)+"GB",
         }
+        // res1.setHeader("Content-Type","application/json")
         res1.write(JSON.stringify(sysdata))
     }
     else if(url=="/users" && method=="GET"){
-        res1.write("List of users")
+        res1.write(JSON.stringify(users))
     }
     else if(url=="/createuser" && method=="POST"){
         res1.write("Create User")
     }
     else if(url.startsWith("/users/")&& method=="GET"){
-        res1.write("Serach User")
+        const id=url.split("/")[2];
+        const user=users.filter(user=>user.id==id);
+        res1.write(JSON.stringify(user))
     }
     else if(url.startsWith("/users/")&& method=="PUT"){
+        const id=url.split("/")[2];
+        const user=users.filter(user=>user.id==id);
         res1.write("Update User")
     }
     else if(url.startsWith("/users/")&& method=="DELETE"){
