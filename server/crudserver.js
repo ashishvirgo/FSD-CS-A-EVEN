@@ -1,10 +1,6 @@
 import http from "http"
 const port=4005;
-const users=[
-    {id:1,name:"ABC1",email:"abc1@gmail.com"},
-    {id:2,name:"ABC2",email:"abc2@gmail.com"},
-    {id:3,name:"ABC3",email:"abc3@gmail.com"},
-];
+const users=[];
 const server=http.createServer((req,res)=>{
 const url=req.url;
 const method=req.method;
